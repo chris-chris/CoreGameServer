@@ -7,7 +7,7 @@ using DotnetCoreServer.Models;
 
 namespace DotnetCoreServer.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]/[action]")]
     public class LoginController : Controller
     {
 
@@ -24,20 +24,20 @@ namespace DotnetCoreServer.Controllers
             return user;
         }
 
-        // POST api/login
+        // POST Login/Facebook
         [HttpPost]
-        public LoginResult Post([FromBody] User requestUser)
+        public LoginResult Facebook([FromBody] User requestUser)
         {
 
             LoginResult result = new LoginResult();
             
-            User user = userDao.FindUserByFUID(requestUser.FacebookUserID);
+            User user = userDao.FindUserByFUID(requestUser.FacebookID);
             
             if(user != null && user.UserID > 0){ // 이미 가입되어 있음
                 
                 result.Data = user;
                 result.Message = "OK";
-                result.Code = 1;
+                result.ResultCode = 1;
 
                 return result;
 
@@ -47,10 +47,10 @@ namespace DotnetCoreServer.Controllers
 
                 requestUser.AccessToken = AccessToken;
                 userDao.InsertUser(requestUser);
-                user = userDao.FindUserByFUID(requestUser.FacebookUserID);
+                user = userDao.FindUserByFUID(requestUser.FacebookID);
                 result.Data = user;
                 result.Message = "New User";
-                result.Code = 2;
+                result.ResultCode = 2;
 
                 return result;
 

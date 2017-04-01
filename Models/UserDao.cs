@@ -22,7 +22,7 @@ namespace DotnetCoreServer.Models
             using (MySqlConnection conn = db.GetConnection())
             {   
                 string query = String.Format(
-                    "SELECT UserID, FacebookUserID, FacebookName, FacebookPhotoURL, Point, CreatedAt, AccessToken FROM tb_user WHERE FacebookUserID = '{0}'",
+                    "SELECT user_id, facebook_user_id, facebook_name, facebook_photo_url, point, created_at, access_token FROM tb_user WHERE facebook_user_id = '{0}'",
                      FacebookUserID);
 
                 Console.WriteLine(query);
@@ -33,7 +33,7 @@ namespace DotnetCoreServer.Models
                     if (reader.Read())
                     {
                         user.UserID = reader.GetInt64(0);
-                        user.FacebookUserID = reader.GetString(1);
+                        user.FacebookID = reader.GetString(1);
                         user.FacebookName = reader.GetString(2);
                         user.FacebookPhotoURL = reader.GetString(3);
                         user.Point = reader.GetInt32(4);
@@ -51,7 +51,7 @@ namespace DotnetCoreServer.Models
             using (MySqlConnection conn = db.GetConnection())
             {   
                 string query = String.Format(
-                    "SELECT UserID, FacebookUserID, FacebookName, FacebookPhotoURL, Point, AccessToken  FROM tb_user WHERE UserID = {0}",
+                    "SELECT user_id, facebook_user_id, facebook_name, facebook_photo_url, point, created_at, access_token  FROM tb_user WHERE user_id = {0}",
                      UserID);
 
                 Console.WriteLine(query);
@@ -62,11 +62,12 @@ namespace DotnetCoreServer.Models
                     if (reader.Read())
                     {
                         user.UserID = reader.GetInt64(0);
-                        user.FacebookUserID = reader.GetString(1);
+                        user.FacebookID = reader.GetString(1);
                         user.FacebookName = reader.GetString(2);
                         user.FacebookPhotoURL = reader.GetString(3);
                         user.Point = reader.GetInt32(4);
-                        user.AccessToken = reader.GetString(5);
+                        user.CreatedAt = reader.GetDateTime(5);
+                        user.AccessToken = reader.GetString(6);
                     }
                 }
             }
@@ -78,8 +79,8 @@ namespace DotnetCoreServer.Models
             using (MySqlConnection conn = db.GetConnection())
             {   
                 string query = String.Format(
-                    "INSERT INTO tb_user (FacebookUserID, FacebookName, FacebookPhotoURL, Point, AccessToken, CreatedAt) VALUES ('{0}','{1}','{2}',{3}, '{4}', now())",
-                     user.FacebookUserID, user.FacebookName, user.FacebookPhotoURL, 0, user.AccessToken);
+                    "INSERT INTO tb_user (facebook_user_id, facebook_name, facebook_photo_url, point, access_token, created_at) VALUES ('{0}','{1}','{2}',{3}, '{4}', now())",
+                     user.FacebookID, user.FacebookName, user.FacebookPhotoURL, 0, user.AccessToken);
 
                 Console.WriteLine(query);
 

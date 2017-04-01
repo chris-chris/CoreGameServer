@@ -29,7 +29,11 @@ namespace DotnetCoreServer
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc()
+               .AddJsonOptions(options =>
+               {
+                   options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+               });;
             
             services.AddSingleton<IConfiguration>(Configuration);
             services.AddSingleton<IUserDao,UserDao>();

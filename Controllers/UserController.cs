@@ -7,7 +7,7 @@ using DotnetCoreServer.Models;
 
 namespace DotnetCoreServer.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]/[action]")]
     public class UserController : Controller
     {
         IUserDao userDao;
@@ -23,10 +23,10 @@ namespace DotnetCoreServer.Controllers
         // }
 
         // GET api/user/5
-        [HttpGet("{id}")]
-        public User Get(int id)
+        [HttpGet]
+        public User Info(int UserID)
         {
-            User user = userDao.GetUser(id);
+            User user = userDao.GetUser(UserID);
             return user;
         }
 
