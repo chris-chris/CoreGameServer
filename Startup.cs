@@ -18,7 +18,6 @@ namespace DotnetCoreServer
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
         }
@@ -36,7 +35,9 @@ namespace DotnetCoreServer
                });;
             
             services.AddSingleton<IConfiguration>(Configuration);
+            services.AddSingleton<IRankDao,RankDao>();
             services.AddSingleton<IUserDao,UserDao>();
+            services.AddSingleton<IUpgradeDao,UpgradeDao>();
             services.AddSingleton<IDB,DB>();
 
         }

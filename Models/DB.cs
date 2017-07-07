@@ -16,7 +16,6 @@ public class DB : IDB
     
     public MySqlConnection GetConnection()
     {
-        
         MySqlConnection connection = new MySqlConnection
         {
             ConnectionString = this.ConnectionString
@@ -24,4 +23,5 @@ public class DB : IDB
         connection.Open();
         return connection;
     }
+
 }

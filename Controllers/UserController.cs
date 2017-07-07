@@ -22,12 +22,15 @@ namespace DotnetCoreServer.Controllers
         //     return new string[] { "value1", "value2" };
         // }
 
-        // GET api/user/5
+        // GET User/Inf
         [HttpGet]
-        public User Info(int UserID)
+        public UserResult Info(int UserID)
         {
-            User user = userDao.GetUser(UserID);
-            return user;
+            UserResult result = new UserResult();
+            result.Data = userDao.GetUser(UserID);
+            result.ResultCode = 1;
+            result.Message = "OK";
+            return result;
         }
 
     }
